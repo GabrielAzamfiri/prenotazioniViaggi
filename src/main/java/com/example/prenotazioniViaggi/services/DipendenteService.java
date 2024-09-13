@@ -51,20 +51,20 @@ public class DipendenteService {
         return this.dipendenteRepository.findById(dipendenteId).orElseThrow(() -> new NotFoundException(dipendenteId));
     }
 
-    public Dipendente findByIdAndUpdate(UUID dipendenteId, Dipendente updatedDipendente){
+    public Dipendente findByIdAndUpdate(UUID dipendenteId, DipendenteDTO updatedDipendenteDTO){
         // 1. Controllo se l'email nuova è già in uso
-        this.dipendenteRepository.findByEmail(updatedDipendente.getEmail()).ifPresent(
+        this.dipendenteRepository.findByEmail(updatedDipendenteDTO.email()).ifPresent(
                 // 1.1 Se lo è triggero un errore (400 Bad Request)
                 dipendente -> {
-                    throw new BadRequestException("L'email " + updatedDipendente.getEmail() + " è già in uso!");
+                    throw new BadRequestException("L'email " + updatedDipendenteDTO.email() + " è già in uso!");
                 }
         );
         Dipendente found = this.findById(dipendenteId);
-        found.setNome(updatedDipendente.getNome());
-        found.setCognome(updatedDipendente.getCognome());
-        found.setEmail(updatedDipendente.getEmail());
-        found.setUsername(updatedDipendente.getUsername());
-        found.setAvatar("https://ui-avatars.com/api/?name="+updatedDipendente.getNome()+"+"+updatedDipendente.getCognome());
+        found.setNome(updatedDipendenteDTO.nome());
+        found.setCognome(updatedDipendenteDTO.cognome());
+        found.setEmail(updatedDipendenteDTO.email());
+        found.setUsername(updatedDipendenteDTO.username());
+        found.setAvatar("https://ui-avatars.com/api/?name="+updatedDipendenteDTO.nome()+"+"+updatedDipendenteDTO.cognome());
         return this.dipendenteRepository.save(found);
     }
 

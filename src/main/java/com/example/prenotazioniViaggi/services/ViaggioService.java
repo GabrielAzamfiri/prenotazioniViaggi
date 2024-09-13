@@ -22,8 +22,6 @@ import java.util.UUID;
 public class ViaggioService {
     @Autowired
     private ViaggioRepository viaggioRepository;
-    @Autowired
-    private Cloudinary cloudinaryUploader;
 
     public Page<Viaggio> findAll(int page, int size, String sortBy){
         if(page > 100) page = 100;

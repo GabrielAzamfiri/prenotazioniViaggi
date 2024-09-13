@@ -10,11 +10,8 @@ import java.util.UUID;
 
 public record PrenotazioneDTO(
         @NotEmpty(message = "Le info sono obbligatorie")
-        @Size(min = 3, max = 40, message = "Il titolo deve essere compreso tra 3 e 40 caratteri")
+        @Size(min = 3, max = 100, message = "Le info  devono essere comprese tra 3 e 100 caratteri")
         String info,
-
-        @NotNull(message = "La data di nascita è obbligatoria")
-        LocalDate dataRichiesta,
 
         @NotNull(message = "Il dipendente è obbligatorio")
         UUID dipendente,
