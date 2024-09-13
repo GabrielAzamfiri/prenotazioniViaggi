@@ -1,14 +1,12 @@
 package com.example.prenotazioniViaggi.services;
 
-import com.cloudinary.Cloudinary;
-import com.example.prenotazioniViaggi.entities.Dipendente;
+
 import com.example.prenotazioniViaggi.entities.Viaggio;
 import com.example.prenotazioniViaggi.enums.StatoViaggio;
 import com.example.prenotazioniViaggi.exceptions.BadRequestException;
 import com.example.prenotazioniViaggi.exceptions.NotFoundException;
 import com.example.prenotazioniViaggi.payloads.StatoViaggioDTO;
 import com.example.prenotazioniViaggi.payloads.ViaggioDTO;
-import com.example.prenotazioniViaggi.repositories.DipendenteRepository;
 import com.example.prenotazioniViaggi.repositories.ViaggioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -17,6 +15,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.UUID;
 
 @Service
@@ -32,16 +31,22 @@ public class ViaggioService {
     }
 
     public Viaggio save(ViaggioDTO viaggioDTO){
+        StatoViaggio statoViaggio;
         try {
-            StatoViaggio statoViaggio = StatoViaggio.valueOf(viaggioDTO.stato().toUpperCase());
-            Viaggio viaggio = new Viaggio(viaggioDTO.destinazione(),viaggioDTO.dataViaggio(), statoViaggio);
-
-            return this.viaggioRepository.save(viaggio);
+           statoViaggio = StatoViaggio.valueOf(viaggioDTO.stato().toUpperCase());
         } catch (Exception e) {
-
             throw new BadRequestException("Errore: lo stato specificato non esiste.");
-
         }
+
+        LocalDate dataViaggio = null;
+        try {
+          dataViaggio= LocalDate.parse(viaggioDTO.dataViaggio());
+        }catch (Exception e){
+            throw new BadRequestException("Errore: il formato data inserito non è corretto. inserire un formato data (yyyy-mm-dd)");
+        }
+        Viaggio viaggio = new Viaggio(viaggioDTO.destinazione(),dataViaggio, statoViaggio);
+
+        return this.viaggioRepository.save(viaggio);
 
     }
 
@@ -51,19 +56,25 @@ public class ViaggioService {
     }
     public Viaggio findByIdAndUpdate(UUID  viaggioId, ViaggioDTO updatedViaggioDTO){
         Viaggio found = findById(viaggioId);
+        StatoViaggio statoViaggio;
+        LocalDate dataViaggio = null;
         try {
-            StatoViaggio statoViaggio = StatoViaggio.valueOf(updatedViaggioDTO.stato().toUpperCase());
-            found.setDestinazione(updatedViaggioDTO.destinazione());
-            found.setDataViaggio(updatedViaggioDTO.dataViaggio());
-            found.setStato(statoViaggio);
-
-            return this.viaggioRepository.save(found);
-        }catch (BadRequestException e) {
-
+            statoViaggio = StatoViaggio.valueOf(updatedViaggioDTO.stato().toUpperCase());
+        }catch (Exception e) {
             throw new BadRequestException("Errore: lo stato specificato non esiste.");
-
         }
 
+        try {
+            dataViaggio= LocalDate.parse(updatedViaggioDTO.dataViaggio());
+        }catch (Exception e){
+            throw new BadRequestException("Errore: il formato data inserito non è corretto. inserire un formato data (yyyy-mm-dd)");
+        }
+
+        found.setDestinazione(updatedViaggioDTO.destinazione());
+        found.setDataViaggio(dataViaggio);
+        found.setStato(statoViaggio);
+
+        return this.viaggioRepository.save(found);
     }
     public void findByIdAndDelete(UUID  viaggioId){
         Viaggio found = findById(viaggioId);

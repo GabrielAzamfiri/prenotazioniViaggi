@@ -1,15 +1,12 @@
 package com.example.prenotazioniViaggi.services;
 
 
-import com.cloudinary.Cloudinary;
 import com.example.prenotazioniViaggi.entities.Dipendente;
 import com.example.prenotazioniViaggi.entities.Prenotazione;
 import com.example.prenotazioniViaggi.entities.Viaggio;
-import com.example.prenotazioniViaggi.enums.StatoViaggio;
 import com.example.prenotazioniViaggi.exceptions.BadRequestException;
 import com.example.prenotazioniViaggi.exceptions.NotFoundException;
 import com.example.prenotazioniViaggi.payloads.PrenotazioneDTO;
-import com.example.prenotazioniViaggi.payloads.ViaggioDTO;
 import com.example.prenotazioniViaggi.repositories.DipendenteRepository;
 import com.example.prenotazioniViaggi.repositories.PrenotazioneRepository;
 import com.example.prenotazioniViaggi.repositories.ViaggioRepository;

@@ -1,10 +1,8 @@
 package com.example.prenotazioniViaggi.controllers;
 
 
-import com.example.prenotazioniViaggi.entities.Dipendente;
 import com.example.prenotazioniViaggi.entities.Prenotazione;
 import com.example.prenotazioniViaggi.exceptions.BadRequestException;
-import com.example.prenotazioniViaggi.payloads.DipendenteDTO;
 import com.example.prenotazioniViaggi.payloads.PrenotazioneDTO;
 import com.example.prenotazioniViaggi.services.PrenotazioneService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,9 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.util.UUID;
 import java.util.stream.Collectors;
 

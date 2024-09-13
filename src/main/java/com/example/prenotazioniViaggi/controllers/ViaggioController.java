@@ -1,13 +1,9 @@
 package com.example.prenotazioniViaggi.controllers;
 
-import com.example.prenotazioniViaggi.entities.Dipendente;
 import com.example.prenotazioniViaggi.entities.Viaggio;
-import com.example.prenotazioniViaggi.enums.StatoViaggio;
 import com.example.prenotazioniViaggi.exceptions.BadRequestException;
-import com.example.prenotazioniViaggi.payloads.DipendenteDTO;
 import com.example.prenotazioniViaggi.payloads.StatoViaggioDTO;
 import com.example.prenotazioniViaggi.payloads.ViaggioDTO;
-import com.example.prenotazioniViaggi.services.DipendenteService;
 import com.example.prenotazioniViaggi.services.ViaggioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
