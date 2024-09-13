@@ -14,9 +14,9 @@ public record PrenotazioneDTO(
         String info,
 
         @NotNull(message = "Il dipendente è obbligatorio")
-        UUID dipendente,
+        String dipendente,
 
         @NotNull(message = "Il viaggio è obbligatorio")
-        UUID viaggio
+        String viaggio
 ) {
 }

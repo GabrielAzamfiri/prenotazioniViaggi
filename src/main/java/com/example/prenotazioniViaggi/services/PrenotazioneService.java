@@ -42,9 +42,18 @@ public class PrenotazioneService {
     }
 
     public Prenotazione save(PrenotazioneDTO prenotazioneDTO){
+        UUID uuidDipendente;
+        UUID uuidViaggio;
+        try {
+            uuidDipendente=  UUID.fromString(prenotazioneDTO.dipendente());
+            uuidViaggio=  UUID.fromString(prenotazioneDTO.viaggio());
+        }catch (Exception e){
+            throw new BadRequestException("L'id inserito non è valido! Necessario inserire un ID di Tipo UUID");
+        }
 
-        Dipendente dipendente = dipendenteRepository.findById(prenotazioneDTO.dipendente()).orElseThrow(() ->  new NotFoundException(prenotazioneDTO.dipendente()));
-        Viaggio viaggio = viaggioRepository.findById(prenotazioneDTO.viaggio()).orElseThrow(() ->  new NotFoundException(prenotazioneDTO.viaggio()));
+
+        Dipendente dipendente = dipendenteRepository.findById(uuidDipendente).orElseThrow(() ->  new NotFoundException(uuidDipendente));
+        Viaggio viaggio = viaggioRepository.findById(uuidViaggio).orElseThrow(() ->  new NotFoundException(uuidViaggio));
 
         prenotazioneRepository.findByDipendenteAndViaggioDataViaggio(dipendente,viaggio.getDataViaggio()).ifPresent(
                 // 1.1 Se lo è triggero un errore (400 Bad Request)
@@ -67,8 +76,18 @@ public class PrenotazioneService {
 
     public Prenotazione findByIdAndUpdate(UUID  prenotazioneId, PrenotazioneDTO updatedPrenotazioneDTO){
         Prenotazione found = findById(prenotazioneId);
-        Dipendente dipendente = dipendenteRepository.findById(updatedPrenotazioneDTO.dipendente()).orElseThrow(() ->  new NotFoundException(updatedPrenotazioneDTO.dipendente()));
-        Viaggio viaggio = viaggioRepository.findById(updatedPrenotazioneDTO.viaggio()).orElseThrow(() ->  new NotFoundException(updatedPrenotazioneDTO.viaggio()));
+        UUID uuidDipendente;
+        UUID uuidViaggio;
+        try {
+            uuidDipendente=  UUID.fromString(updatedPrenotazioneDTO.dipendente());
+            uuidViaggio=  UUID.fromString(updatedPrenotazioneDTO.viaggio());
+        }catch (Exception e){
+            throw new BadRequestException("L'id inserito non è valido! Necessario inserire un id di Tipo UUID");
+        }
+
+
+        Dipendente dipendente = dipendenteRepository.findById(uuidDipendente ).orElseThrow(() ->  new NotFoundException(uuidDipendente));
+        Viaggio viaggio = viaggioRepository.findById(uuidViaggio ).orElseThrow(() ->  new NotFoundException(uuidViaggio));
 
 
         found.setInfo(updatedPrenotazioneDTO.info());
