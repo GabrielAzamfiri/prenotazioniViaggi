@@ -66,4 +66,6 @@ public class PrenotazioneController {
         prenotazioneService.findByIdAndDelete(prenotazioneId);
     }
 
+
+
 }

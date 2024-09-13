@@ -6,6 +6,7 @@ import com.example.prenotazioniViaggi.entities.Viaggio;
 import com.example.prenotazioniViaggi.enums.StatoViaggio;
 import com.example.prenotazioniViaggi.exceptions.BadRequestException;
 import com.example.prenotazioniViaggi.exceptions.NotFoundException;
+import com.example.prenotazioniViaggi.payloads.StatoViaggioDTO;
 import com.example.prenotazioniViaggi.payloads.ViaggioDTO;
 import com.example.prenotazioniViaggi.repositories.DipendenteRepository;
 import com.example.prenotazioniViaggi.repositories.ViaggioRepository;
@@ -37,9 +38,9 @@ public class ViaggioService {
 
             return this.viaggioRepository.save(viaggio);
         } catch (Exception e) {
-            // Gestisci l'errore, ad esempio lanciando un'eccezione personalizzata o restituendo un messaggio d'errore
+
             throw new BadRequestException("Errore: lo stato specificato non esiste.");
-            // Puoi anche lanciare un'eccezione personalizzata, oppure restituire un valore di default.
+
         }
 
     }
@@ -58,15 +59,30 @@ public class ViaggioService {
 
             return this.viaggioRepository.save(found);
         }catch (BadRequestException e) {
-            // Gestisci l'errore, ad esempio lanciando un'eccezione personalizzata o restituendo un messaggio d'errore
+
             throw new BadRequestException("Errore: lo stato specificato non esiste.");
-            // Puoi anche lanciare un'eccezione personalizzata, oppure restituire un valore di default.
+
         }
 
     }
     public void findByIdAndDelete(UUID  viaggioId){
         Viaggio found = findById(viaggioId);
         this.viaggioRepository.delete(found);
+    }
+
+    public Viaggio findByIdAndUpdateStato(UUID viaggioId, StatoViaggioDTO statoViaggioDTO){
+        StatoViaggio statoViaggio;
+        Viaggio viaggio = findById(viaggioId);
+        try {
+            statoViaggio = StatoViaggio.valueOf(statoViaggioDTO.statoViaggio().toUpperCase());
+        }catch (Exception e) {
+            // Gestisci l'errore, ad esempio lanciando un'eccezione personalizzata o restituendo un messaggio d'errore
+            throw new BadRequestException("Errore: lo stato specificato non esiste.");
+            // Puoi anche lanciare un'eccezione personalizzata, oppure restituire un valore di default.
+        }
+        viaggio.setStato(statoViaggio);
+        return this.viaggioRepository.save(viaggio);
+
     }
 
 }

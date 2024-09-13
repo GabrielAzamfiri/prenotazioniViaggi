@@ -2,8 +2,10 @@ package com.example.prenotazioniViaggi.controllers;
 
 import com.example.prenotazioniViaggi.entities.Dipendente;
 import com.example.prenotazioniViaggi.entities.Viaggio;
+import com.example.prenotazioniViaggi.enums.StatoViaggio;
 import com.example.prenotazioniViaggi.exceptions.BadRequestException;
 import com.example.prenotazioniViaggi.payloads.DipendenteDTO;
+import com.example.prenotazioniViaggi.payloads.StatoViaggioDTO;
 import com.example.prenotazioniViaggi.payloads.ViaggioDTO;
 import com.example.prenotazioniViaggi.services.DipendenteService;
 import com.example.prenotazioniViaggi.services.ViaggioService;
@@ -63,5 +65,9 @@ public class ViaggioController {
     @ResponseStatus(HttpStatus.NO_CONTENT) // Serve per customizzare lo status code (NO_CONTENT --> 204)
     private void findByIdAndDelete(@PathVariable UUID  viaggioId){
         viaggioService.findByIdAndDelete(viaggioId);
+    }
+    @PatchMapping("/{viaggioId}/stato")
+    private Viaggio findByStato(@PathVariable UUID viaggioId ,@RequestBody StatoViaggioDTO statoViaggioDTO){
+        return viaggioService.findByIdAndUpdateStato(viaggioId, statoViaggioDTO);
     }
 }
