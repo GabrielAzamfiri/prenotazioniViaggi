@@ -53,7 +53,7 @@ public class DipentendeController {
 
     }
     @PutMapping("/{dipendenteId}")
-    private Dipendente findByIdAndUpdate(@PathVariable UUID  dipendenteId, @RequestBody DipendenteDTO updatedDipendenteDTO){
+    private Dipendente findByIdAndUpdate(@PathVariable UUID  dipendenteId, @RequestBody @Validated DipendenteDTO updatedDipendenteDTO){
         return dipendenteService.findByIdAndUpdate(dipendenteId,updatedDipendenteDTO);
     }
 

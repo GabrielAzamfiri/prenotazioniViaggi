@@ -57,7 +57,7 @@ public class ViaggioController {
 
     }
     @PutMapping("/{viaggioId}")
-    private Viaggio findByIdAndUpdate(@PathVariable UUID  viaggioId, @RequestBody ViaggioDTO updatedViaggioDTO){
+    private Viaggio findByIdAndUpdate(@PathVariable UUID  viaggioId, @RequestBody @Validated ViaggioDTO updatedViaggioDTO){
         return viaggioService.findByIdAndUpdate(viaggioId,updatedViaggioDTO);
     }
 
@@ -67,7 +67,7 @@ public class ViaggioController {
         viaggioService.findByIdAndDelete(viaggioId);
     }
     @PatchMapping("/{viaggioId}/stato")
-    private Viaggio findByStato(@PathVariable UUID viaggioId ,@RequestBody StatoViaggioDTO statoViaggioDTO){
+    private Viaggio findByStato(@PathVariable UUID viaggioId ,@RequestBody @Validated StatoViaggioDTO statoViaggioDTO){
         return viaggioService.findByIdAndUpdateStato(viaggioId, statoViaggioDTO);
     }
 }

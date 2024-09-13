@@ -56,7 +56,7 @@ public class PrenotazioneController {
     }
 
     @PutMapping("/{prenotazioneId}")
-    private Prenotazione findByIdAndUpdate(@PathVariable UUID  prenotazioneId, @RequestBody PrenotazioneDTO updatedPrenotazioneDTO){
+    private Prenotazione findByIdAndUpdate(@PathVariable UUID  prenotazioneId, @RequestBody @Validated PrenotazioneDTO updatedPrenotazioneDTO){
         return prenotazioneService.findByIdAndUpdate(prenotazioneId,updatedPrenotazioneDTO);
     }
 
